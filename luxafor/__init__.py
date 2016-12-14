@@ -1,6 +1,9 @@
-'''
-Created on 13 Dec 2016
+"""
+Luxafor Python Interface
 
-@author: martin
-'''
-from . import api, constants
+The API is close to the hardware features.
+"""
+from .api import API
+# pylint: disable=wildcard-import
+from .constants import *
+# Normally you don't want to import *, but in this case these are all constants.

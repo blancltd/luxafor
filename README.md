@@ -11,8 +11,8 @@ Assuming the current user is allowed to access the device:
 ```python
 import luxafor
 
-API = luxafor.api.API()
-API.mode_colour(luxafor.constants.COLOUR_GREEN)
+API = luxafor.API()
+API.mode_colour(luxafor.COLOUR_RED)
 ```
 You may want to read the help() text for API class and perhaps list the contents
 in luxafor.constants .
