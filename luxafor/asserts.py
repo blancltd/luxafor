@@ -37,18 +37,18 @@ def rgb(value):
 
 def led(value):
     "Is the value a valid LED id to be addressed?"
-    if value not in constants.LEDS:
+    if value not in constants.LED_ALL_OPTIONS:
         text = 'LED number {} must be one of: {}'
-        raise ValueError(text.format(value, str(constants.LEDS)))
+        raise ValueError(text.format(value, str(constants.LED_ALL_OPTIONS)))
 
 def wave(value):
     "Is the wave pattern valid?"
-    if value < 1 or value > 5:
-        text = 'Wave pattern must be between 1 and 5'
-        raise ValueError(text)
+    if value not in constants.PATTERN_WAVES:
+        text = 'Wave pattern must be in {}'
+        raise ValueError(text.format(constants.PATTERN_WAVES))
 
 def demo(value):
     "Is the demo pattern valid>"
-    if value < 1 or value > 8:
-        text = 'Demo pattern must be between 1 and 8'
-        raise ValueError(text)
+    if value not in constants.PATTERN_DEMOS:
+        text = 'Demo pattern must be in {}'
+        raise ValueError(text.format(constants.PATTERN_DEMOS))
