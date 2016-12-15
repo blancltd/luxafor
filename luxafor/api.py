@@ -1,12 +1,12 @@
 """
-API for Luxafor USB status lights.
+API for Luxafor Fag USB device.
 """
 
 from . import asserts
 from .constants import COLOUR_NONE as NONE
 from .constants import COLOUR_WHITE as WHITE
 from .constants import LED_ALL as ALL
-from .constants import MODE_COLOUR, MODE_DEMO, MODE_FADE, MODE_STROBE, MODE_WAVE
+from .constants import MODE_COLOUR, MODE_DEMO, MODE_FADE, MODE_BLINK, MODE_WAVE
 from .constants import PATTERN_DEMO_LUXAFOR as PATTERN_DEMO
 from .constants import PATTERN_WAVE_SINGLE_SMALL as PATTERN_WAVE
 from .device import find as find_device
@@ -63,9 +63,9 @@ class API(object):
         values = [led] + list(rgb) + [speed]
         self._set_mode(MODE_FADE, values)
 
-    def mode_strobe(self, rgb=WHITE, speed=24, repeat=5, led=ALL):
+    def mode_blink(self, rgb=WHITE, speed=24, repeat=5, led=ALL):
         """
-        Flicker the rgb value, where speed 255 is the slowest and repeat 255 the
+        Blink the rgb value, where speed 255 is the slowest and repeat 255 the
         most often.
         """
         asserts.rgb(rgb)
@@ -73,7 +73,7 @@ class API(object):
         asserts.byte(speed, 'speed')
         asserts.byte(repeat, 'repeat')
         values = [led] + list(rgb) + [speed, 0, repeat]
-        self._set_mode(MODE_STROBE, values)
+        self._set_mode(MODE_BLINK, values)
 
     def mode_wave(self, rgb=NONE, pattern=PATTERN_WAVE, speed=24, repeat=3):
         """
