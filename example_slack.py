@@ -8,16 +8,31 @@ from slackclient import SlackClient
 
 
 slack_token = os.environ["SLACK_API_TOKEN"]
-sc = SlackClient(slack_token)
+slack_client = SlackClient(slack_token)
+lux = luxafor.API()
+snooze_remaining = -1  # Countdown timer
+user_id = 'U024G0M2L'
 
-API = luxafor.API()
+if slack_client.rtm_connect():
+    while True:
+        try:
+            for event in slack_client.rtm_read():
+                if event['type'] == 'dnd_updated' and event['user'] == user_id:
+                    if event['dnd_status']['snooze_enabled'] is True:
+                        lux.mode_colour(luxafor.COLOUR_RED)
+                        snooze_remaining = event['dnd_status']['snooze_remaining']
+                    else:
+                        lux.mode_colour(luxafor.COLOUR_GREEN)
+        except KeyError:
+            pass
 
-while (True):
-    presence = sc.api_call("dnd.info")
+        if snooze_remaining >= 1:
+            snooze_remaining -= 1
+        if snooze_remaining == 0 or snooze_remaining == -1:
+            lux.mode_colour(luxafor.COLOUR_GREEN)
+            snooze_remaining = -1
 
-    if presence['snooze_enabled']:
-        API.mode_colour(luxafor.COLOUR_RED)
-    else:
-        API.mode_colour(luxafor.COLOUR_GREEN)
+        time.sleep(1)
 
-    time.sleep(1)  # make sure we don't flood slack
+else:
+    print("Connection Failed, invalid token?")
